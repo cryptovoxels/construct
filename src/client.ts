@@ -10,11 +10,13 @@ var engine = new B.Engine(canvas, true)
 var scene = new B.Scene(engine);
 scene.gravity = new B.Vector3(0, -9.81, 0);
 
-var camera = new B.UniversalCamera("UniversalCamera", new B.Vector3(0, 2, -5), scene)
+var camera = new B.UniversalCamera("UniversalCamera", new B.Vector3(0, 1.8, -5), scene)
 camera.setTarget(new B.Vector3(0, 2, 5));
 camera.attachControl(canvas, true);
-camera.ellipsoid = new B.Vector3(1, 2, 1)
+camera.ellipsoid = new B.Vector3(0.9, 0.9, 0.9)
 camera.applyGravity = true
+camera.inertia = 0
+camera.angularSensibility = 500
 
 // WASD
 camera.keysUp.push(87)
@@ -22,6 +24,11 @@ camera.keysDown.push(83)
 camera.keysLeft.push(65)
 camera.keysRight.push(68)
 camera.maxZ = 2000
+
+// Enable Collisions
+scene.collisionsEnabled = true
+camera.checkCollisions = true
+camera.speed = 1
 
 var light1 = new B.HemisphericLight("light1", new B.Vector3(1, 1, 0), scene);
 var light2 = new B.PointLight("light2", new B.Vector3(-5, 10, 5), scene);
@@ -65,11 +72,6 @@ boxMat.ambientColor.set(1, 1, 1)
 boxMat.roughness = 1
 boxMat.metallic = 0.2
 box.material = boxMat
-
-// Enable Collisions
-scene.collisionsEnabled = true;
-camera.checkCollisions = true;
-camera.speed = 0.25;
 
 // Pointer lock
 scene.onPointerDown = function (evt) {
